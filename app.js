@@ -2,11 +2,10 @@ const express = require('express');
 const app = express();
 const port = 3000;
 
-app.use(express.json());
+const moviesRoutes = require('./routes/moviesRoutes');
 
-app.use('/movies', (req, res) => {
-    res.status(501).json({ message: 'Route non ancora implementata' });
-});
+app.use(express.json());
+app.use('/movies', moviesRoutes);
 
 app.listen(port, () => {
     console.log(`Server in ascolto su http://localhost:${port}`);
