@@ -35,4 +35,16 @@ router.get('/:id', (req, res) => {
     });
 });
 
+// Rotta immagini
+router.get('/', (req, res) => {
+    const sql = 'SELECT id, title, image_path FROM movies';
+    db.query(sql, (err, results) => {
+        if (err) return res.status(500).json({ error: 'Errore durante la query al database' });
+        results.forEach(movie => {
+            movie.image_url = `/images/${movie.image_path}`;
+        });
+        res.json(results);
+    });
+});
+
 module.exports = router;
