@@ -1,4 +1,5 @@
 const express = require('express');
+const cors = require('cors');
 const notFound = require('./middlewares/notFound');
 const errorHandler = require('./middlewares/errorHandler');
 const logger = require('./middlewares/logger');
@@ -6,10 +7,11 @@ const logger = require('./middlewares/logger');
 const app = express();
 const port = process.env.PORT || 4000;
 
-const cors = require('cors');
-
 const moviesRoutes = require('./routes/moviesRoutes');
 
+app.use(cors({
+    origin: 'http://localhost:5173'
+}));
 
 app.use(express.json());
 app.use('/movies', moviesRoutes);
@@ -23,8 +25,6 @@ app.use(errorHandler);
 
 // Logger solo per le rotte dei film
 app.use('/movies', logger, moviesRoutes);
-
-app.use(cors());
 
 app.listen(port, () => {
     console.log(`Server in ascolto su http://localhost:${port}`);
